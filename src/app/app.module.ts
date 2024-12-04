@@ -11,6 +11,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 
 // Local
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/components/shared.module';
 
     // Angular
     BrowserModule,
+    HttpClientModule,
 
     // Firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),

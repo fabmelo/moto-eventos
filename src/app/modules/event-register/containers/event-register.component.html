@@ -5,8 +5,55 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content role="form" [formGroup]="form">
 
-  <p>Conteudo aqui</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <form [formGroup]="form" (submit)="salvarEvento()">
+          <ion-grid>
+
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none">
+                  <ion-label position="stacked" class="custom-label">Título</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="title"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none">
+                  <ion-label position="stacked" class="custom-label">Descrição</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="description"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none">
+                  <ion-label position="stacked" class="custom-label">Imagem</ion-label>
+                  <ion-input type="file" (change)="selecionandoImagem($event)"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none">
+                  <ion-button type="submit" expand="full" shape="round" size="default">Salvar</ion-button>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

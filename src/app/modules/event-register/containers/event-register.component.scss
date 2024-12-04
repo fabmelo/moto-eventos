@@ -7,3 +7,11 @@ ion-title {
     font-weight: 400;
   }
 }
+
+.custom-label {
+  color: var(--ion-color-primary);
+  font-weight: bold;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
