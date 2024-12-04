@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">moto-eventos</string>
+    <string name="title_activity_main">moto-eventos</string>
+    <string name="package_name">com.motoeventos.app</string>
+    <string name="custom_url_scheme">com.motoeventos.app</string>
+</resources>
