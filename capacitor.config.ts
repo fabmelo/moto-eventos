@@ -7,17 +7,13 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   plugins: {
     SplashScreen: {
-      launchShowDuration: 3000,
-      launchAutoHide: true,
-      backgroundColor: '#ffcc00',
-      androidSplashResourceName: 'splash',
-      iosSplashResourceName: 'Default',
-      showSpinner: false,
-      androidScaleType: 'CENTER_CROP',
-      iosSpinnerStyle: 'small',
-      spinnerColor: '#999999',
-      splashFullScreen: true,
-      splashImmersive: true,
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#c60407",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
     },
   },
 };
