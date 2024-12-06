@@ -17,11 +17,15 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MaskDirective } from './core/directives/mask.directive';
 import { SharedModule } from './shared/components/shared.module';
+
+// Others
 
 @NgModule({
   declarations: [
     AppComponent,
+    MaskDirective
   ],
   imports: [
     // Local
@@ -41,6 +45,9 @@ import { SharedModule } from './shared/components/shared.module';
 
     // Ionic
     IonicModule.forRoot({ mode: 'md' }),
+
+    // Others
+
   ],
   providers: [],
   bootstrap: [AppComponent]

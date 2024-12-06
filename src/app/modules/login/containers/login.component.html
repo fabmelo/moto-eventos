@@ -1,8 +1,10 @@
-<ion-content color="light">
+<ion-content color="primary">
   <div class="center-content">
-    <ion-button shape="round" fill="outline" (click)="loginWithGoogle()">
+    <img src="assets/logo-app.png" alt="MotoEventos">
+    <ion-button color="light" shape="round" fill="outline" (click)="loginWithGoogle()">
       <ion-icon slot="start" name="logo-google"></ion-icon>
       Login com Google
     </ion-button>
+    <ion-label><small>Versão: {{ version }}</small></ion-label>
   </div>
 </ion-content>

@@ -8,10 +8,27 @@ ion-title {
   }
 }
 
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+
 .custom-label {
-  color: var(--ion-color-primary);
   font-weight: bold;
   padding: 0 0 20px 0;
   margin: 0;
+}
+
+.custom-calendar{
+  border: 1px solid #CCCCCC;
+}
+
+.custom-item {
+  border-bottom: 1px solid #ffffff;
+}
+
+.full-width-button {
+  width: 100%;
 }
 

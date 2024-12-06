@@ -1,13 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
     <app-menu-toggle slot="start"></app-menu-toggle>
-    <ion-title>Moto Eventos<span> | {{title}}</span></ion-title>
+    <ion-title>Moto Eventos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content role="form" [formGroup]="form">
+<ion-content role="form" [formGroup]="form" color="primary">
 
   <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" color="primary">
+          <ion-label>
+            <h1>{{title}}</h1>
+            <p>Cadastre seu evento de motociclismo, preencha com o máximo de informações possíveis, tais como as atrações e sobre ingresso e acesso ao evento, <strong>não deixe nada de fora</strong>! Se possível informe a localização pelo Google Maps, um e-mail e um WhatsApp de contato</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
 
@@ -16,35 +26,156 @@
 
             <ion-row>
               <ion-col>
-                <ion-item lines="none">
-                  <ion-label position="stacked" class="custom-label">Título</ion-label>
-                  <ion-input type="text" ngDefaultControl  formControlName="title"></ion-input>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Nome do Evento</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="nome"></ion-input>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="form.get('nome')?.hasError('required') && form.get('nome')?.dirty">
+                  <ion-note slot="start" color="warning">
+                    Obrigatório um nome para o evento!
+                  </ion-note>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-row>
               <ion-col>
-                <ion-item lines="none">
-                  <ion-label position="stacked" class="custom-label">Descrição</ion-label>
-                  <ion-input type="text" ngDefaultControl  formControlName="description"></ion-input>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">MC ou MG Organizador</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="organizador"></ion-input>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="form.get('organizador')?.hasError('required') && form.get('organizador')?.dirty">
+                  <ion-note slot="start" color="danger">
+                    Obrigatório um organizador para o evento!
+                  </ion-note>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-row>
               <ion-col>
-                <ion-item lines="none">
-                  <ion-label position="stacked" class="custom-label">Imagem</ion-label>
-                  <ion-input type="file" (change)="selecionandoImagem($event)"></ion-input>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Descrição do Evento</ion-label>
+                  <ion-textarea ngDefaultControl  formControlName="descricao"></ion-textarea>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="form.get('descricao')?.hasError('required') && form.get('descricao')?.dirty">
+                  <ion-note slot="start" color="danger">
+                    Obrigatório uma descrição do evento!
+                  </ion-note>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-row>
               <ion-col>
-                <ion-item lines="none">
-                  <ion-button type="submit" expand="full" shape="round" size="default">Salvar</ion-button>
+                <ion-item color="primary" lines="none">
+                  <ion-label position="stacked" class="custom-label">Imagem do Cartaz</ion-label>
+                  <input type="file" id="inputImagem" (change)="selecionandoImagem($event)" hidden accept=".jpg, .png">
+                  <ion-button color="secondary" expand="block" shape="round" size="default" (click)="gatilhoInputImagem()" class="full-width-button">Escolha a imagem</ion-button>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Estado</ion-label>
+                  <ion-select ngDefaultControl formControlName="estado" placeholder="Selecione o estado" (ionChange)="obterCidades($event)">
+                    <ion-select-option *ngFor="let estado of estados" [value]="estado">
+                      {{ estado.name }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="localidade.estado">
+              <ion-col>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Cidade</ion-label>
+                  <ion-select ngDefaultControl formControlName="cidade" placeholder="Selecione a cidade" (ionChange)="defineLocalidade($event)">
+                    <ion-select-option *ngFor="let cidade of cidades" [value]="cidade">
+                      {{ cidade.name }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Localização (URL Google Maps)</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="localizacao"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none" color="primary">
+                  <ion-label position="stacked" class="custom-label">Data do Evento</ion-label>
+                  <ion-datetime-button datetime="datetime" presentation="date" formControlName="data" ngDefaultControl></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ion-datetime
+                        id="datetime"
+                        presentation="date"
+                        (ionChange)="form.get('data')?.setValue($event.detail.value)"
+                        [value]="dataHoje"
+                        [formatOptions]="{
+                          date: {
+                            weekday: 'short',
+                            month: 'long',
+                            day: '2-digit',
+                          },
+                          time: {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          },
+                        }"
+                      ></ion-datetime>
+                  </ion-modal>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="form.get('data')?.hasError('required') && form.get('data')?.touched">
+                  <ion-note slot="start" color="danger">
+                    Obrigatório uma data para o evento!
+                  </ion-note>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">E-mail (Organizador)</ion-label>
+                  <ion-input type="email" ngDefaultControl formControlName="email"></ion-input>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="((form.get('email')?.hasError('required') || form.get('email')?.invalid) && form.get('email')?.dirty)">
+                  <ion-note slot="start" color="danger">
+                    Obrigatório um e-mail válido!
+                  </ion-note>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="primary" class="custom-item">
+                  <ion-label position="stacked" class="custom-label">Celular (WhatsApp Organizador)</ion-label>
+                  <ion-input type="tel" ngDefaultControl  formControlName="celular" appMask="(00) 00000-0000" placeholder="(00) 00000-0000"></ion-input>
+                </ion-item>
+                <ion-item color="primary" lines="none" *ngIf="form.get('celular')?.hasError('required') && form.get('celular')?.dirty">
+                  <ion-note slot="start" color="danger">
+                    Obrigatório um celular de contato!
+                  </ion-note>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="primary" lines="none">
+                  <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" [disabled]="form.invalid" class="full-width-button">Salvar</ion-button>
                 </ion-item>
               </ion-col>
             </ion-row>

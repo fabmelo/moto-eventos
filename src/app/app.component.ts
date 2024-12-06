@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { environment } from '@env/environment';
 import { Platform } from '@ionic/angular';
 import { AuthService } from './core/services/auth.service';
 
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
   public items: any[] = [];
   public user: any = null;
   public logado: boolean = false;
+  public version = environment.version;
 
   private readonly firestore = inject(Firestore);
   private readonly authService = inject(AuthService);
@@ -53,13 +55,7 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  // async ngOnInit() {
-  //   if (this.authService.currentUser) {
-  //     this.router.navigate(['/home']);
-  //   } else {
-  //     this.router.navigate(['/login']);
-  //   }
-  // }
+
 
   // async addItem() {
   //   if (this.authService.currentUser) {
@@ -74,12 +70,4 @@ export class AppComponent implements OnInit {
   //   }
   // }
 
-  // async ngOnInit() {
-  //   if (this.authService.currentUser) {
-  //     const querySnapshot = await getDocs(collection(this.firestore, 'items'));
-  //     this.items = querySnapshot.docs.map(doc => doc.data());
-  //   } else {
-  //     console.log('User not authenticated');
-  //   }
-  // }
 }

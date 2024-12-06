@@ -8,6 +8,10 @@ import { EventRegisterRoutingModule } from './event-register-routing.module';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [EventRegisterComponent],
-  imports: [CommonModule, EventRegisterRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    EventRegisterRoutingModule,
+    SharedModule,
+  ],
 })
 export class EventRegisterModule {}

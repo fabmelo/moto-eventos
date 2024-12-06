@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { environment } from '@env/environment';
 import { map, take } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -10,6 +11,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  public version = environment.version;
+
   private readonly authService = inject(AuthService);
   private readonly angularFireAuth = inject(AngularFireAuth);
   private readonly router = inject(Router);

@@ -11,6 +11,11 @@ ion-menu::part(container) {
   border-radius: 0 25px 25px 0;
 }
 
+ion-footer.ion-no-border {
+  --ion-border-color: transparent;
+  --ion-box-shadow: none;
+}
+
 ion-button.close-button {
   --background: transparent;
   --color: white;
