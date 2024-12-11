@@ -30,7 +30,7 @@
                   <ion-label position="stacked" class="custom-label">Nome do Evento</ion-label>
                   <ion-input type="text" ngDefaultControl  formControlName="nome"></ion-input>
                 </ion-item>
-                <ion-item color="primary" lines="none" *ngIf="form.get('nome')?.hasError('required') && form.get('nome')?.dirty">
+                <ion-item color="primary" lines="none" *ngIf="form.get('nome')?.hasError('required') && (form.get('nome')?.touched || form.get('nome')?.dirty)">
                   <ion-note slot="start" color="warning">
                     Obrigatório um nome para o evento!
                   </ion-note>
@@ -44,8 +44,8 @@
                   <ion-label position="stacked" class="custom-label">MC ou MG Organizador</ion-label>
                   <ion-input type="text" ngDefaultControl  formControlName="organizador"></ion-input>
                 </ion-item>
-                <ion-item color="primary" lines="none" *ngIf="form.get('organizador')?.hasError('required') && form.get('organizador')?.dirty">
-                  <ion-note slot="start" color="danger">
+                <ion-item color="primary" lines="none" *ngIf="form.get('organizador')?.hasError('required') && (form.get('organizador')?.touched || form.get('organizador')?.dirty)">
+                  <ion-note slot="start" color="warning">
                     Obrigatório um organizador para o evento!
                   </ion-note>
                 </ion-item>
@@ -58,8 +58,8 @@
                   <ion-label position="stacked" class="custom-label">Descrição do Evento</ion-label>
                   <ion-textarea ngDefaultControl  formControlName="descricao"></ion-textarea>
                 </ion-item>
-                <ion-item color="primary" lines="none" *ngIf="form.get('descricao')?.hasError('required') && form.get('descricao')?.dirty">
-                  <ion-note slot="start" color="danger">
+                <ion-item color="primary" lines="none" *ngIf="form.get('descricao')?.hasError('required') && (form.get('descricao')?.touched || form.get('descricao')?.dirty)">
+                  <ion-note slot="start" color="warning">
                     Obrigatório uma descrição do evento!
                   </ion-note>
                 </ion-item>
@@ -105,8 +105,8 @@
             <ion-row>
               <ion-col>
                 <ion-item color="primary" class="custom-item">
-                  <ion-label position="stacked" class="custom-label">Localização (URL Google Maps)</ion-label>
-                  <ion-input type="text" ngDefaultControl  formControlName="localizacao"></ion-input>
+                  <ion-label position="stacked" class="custom-label">Localização (Incorporar um mapa)</ion-label>
+                  <ion-input type="text" ngDefaultControl  formControlName="localizacao" placeholder="Google Maps <iframe src=''></iframe>"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -136,8 +136,8 @@
                       ></ion-datetime>
                   </ion-modal>
                 </ion-item>
-                <ion-item color="primary" lines="none" *ngIf="form.get('data')?.hasError('required') && form.get('data')?.touched">
-                  <ion-note slot="start" color="danger">
+                <ion-item color="primary" lines="none" *ngIf="form.get('data')?.hasError('required') && (form.get('data')?.touched || form.get('data')?.dirty)">
+                  <ion-note slot="start" color="warning">
                     Obrigatório uma data para o evento!
                   </ion-note>
                 </ion-item>
@@ -151,7 +151,7 @@
                   <ion-input type="email" ngDefaultControl formControlName="email"></ion-input>
                 </ion-item>
                 <ion-item color="primary" lines="none" *ngIf="((form.get('email')?.hasError('required') || form.get('email')?.invalid) && form.get('email')?.dirty)">
-                  <ion-note slot="start" color="danger">
+                  <ion-note slot="start" color="warning">
                     Obrigatório um e-mail válido!
                   </ion-note>
                 </ion-item>
@@ -162,10 +162,10 @@
               <ion-col>
                 <ion-item color="primary" class="custom-item">
                   <ion-label position="stacked" class="custom-label">Celular (WhatsApp Organizador)</ion-label>
-                  <ion-input type="tel" ngDefaultControl  formControlName="celular" appMask="(00) 00000-0000" placeholder="(00) 00000-0000"></ion-input>
+                  <ion-input type="tel" ngDefaultControl formControlName="celular" appPhoneMask placeholder="(00) 00000-0000"></ion-input>
                 </ion-item>
-                <ion-item color="primary" lines="none" *ngIf="form.get('celular')?.hasError('required') && form.get('celular')?.dirty">
-                  <ion-note slot="start" color="danger">
+                <ion-item color="primary" lines="none" *ngIf="form.get('celular')?.hasError('required') && (form.get('celular')?.touched || form.get('celular')?.dirty)">
+                  <ion-note slot="start" color="warning">
                     Obrigatório um celular de contato!
                   </ion-note>
                 </ion-item>

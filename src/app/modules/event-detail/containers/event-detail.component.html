@@ -1,12 +1,47 @@
 <ion-header>
   <ion-toolbar color="primary">
     <app-menu-toggle slot="start"></app-menu-toggle>
-    <ion-title>Moto Eventos<span> | {{title}}</span></ion-title>
+    <ion-title>Moto Eventos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content color="primary">
 
-  <p>Conteudo aqui</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" color="primary">
+          <ion-label>
+            <h1>{{title}}</h1>
+            <p>Estes são os detalhes do evento selecionado. Se surgirem dúvidas sobre o evento, entre em contato com os organizadores.</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+
+        <ion-card *ngIf="evento$ | async as evento" class="claro">
+          <img [src]="evento.imagem">
+          <ion-card-header>
+            <ion-card-title color="secondary"><strong>{{ evento.nome }}</strong></ion-card-title>
+            <ion-card-subtitle>{{ evento.data | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ evento.cidade }} - {{ evento.estado }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>
+              <p>{{ evento.descricao }}</p>
+              <p class="rotulo">Organizador</p>
+              <p><ion-icon name="logo-whatsapp" color="secondary"></ion-icon> {{ evento.celular }}</p>
+              <p><ion-icon name="mail" color="secondary"></ion-icon> {{ evento.email }}</p>
+              <p class="rotulo">Localização</p>
+            </ion-label>
+          </ion-card-content>
+          <div [innerHTML]="localizacao"></div>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

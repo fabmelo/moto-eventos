@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@app/core/services/auth.service';
+import { DadosService } from '@app/core/services/dados.service';
 
 @Component({
   selector: 'app-event-list',
@@ -7,10 +10,58 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventListComponent  implements OnInit {
 
+  private readonly dadosService = inject(DadosService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
   public title = 'Eventos';
+  public eventos: any[] = [];
+  public limit = 10;
+  public lastVisible: any;
+  public uidLogado: string | undefined = '';
+  public hasMoreData = true; 
 
-  constructor() { }
+  ngOnInit() {
+    this.obterEventos();
+    this.authService.getUserProfile().subscribe({
+      next: (user) => {
+        this.uidLogado = user?.uid;
+      }
+    });
+  }
 
-  ngOnInit() {}
+  public obterEventos(event?: any) {
+    if (!this.hasMoreData) {
+      if (event) {
+        event.target.complete();
+      }
+      return;
+    }
+  
+    this.dadosService.obterEventosComInfiniteScroll(this.limit, this.lastVisible).subscribe(data => {
+      if (data.length > 0) {
+        this.eventos = this.eventos.concat(data);
+        this.lastVisible = data[data.length - 1];
+      } else {
+        this.hasMoreData = false; // Não há mais dados para carregar
+      }
+  
+      if (event) {
+        event.target.complete();
+      }
+    });
+  }
+
+  public obterMaisEventos(event: any) {
+    this.obterEventos(event);
+  }
+
+  public detalheEvento(id: any) {
+    this.router.navigate(['/event-detail', id]);
+  }
+
+  public editarEvento(id: any) {
+
+  }
 
 }

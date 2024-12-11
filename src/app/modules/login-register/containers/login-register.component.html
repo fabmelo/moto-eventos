@@ -1,0 +1,68 @@
+<ion-content role="form" [formGroup]="form" color="primary">
+
+  <form [formGroup]="form" (submit)="register()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none" color="primary">
+            <ion-label>
+              <h1>{{title}}</h1>
+              <p>Cadastre seu usuário, informe seu e-mail e senha!</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary">
+            <ion-label position="stacked">Nome</ion-label>
+            <ion-input ngDefaultControl  formControlName="nome" type="text"></ion-input>
+          </ion-item>
+          <ion-item color="primary" lines="none" *ngIf="((form.get('nome')?.hasError('required') || form.get('nome')?.invalid) && form.get('nome')?.dirty)">
+            <ion-note slot="start" color="warning">
+              Obrigatório um nome de usuário!
+            </ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary">
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input ngDefaultControl  formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <ion-item color="primary" lines="none" *ngIf="((form.get('email')?.hasError('required') || form.get('email')?.invalid) && form.get('email')?.dirty)">
+            <ion-note slot="start" color="warning">
+              Obrigatório um e-mail válido!
+            </ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary">
+            <ion-label position="stacked">Senha</ion-label>
+            <ion-input ngDefaultControl  formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <ion-item color="primary" lines="none" *ngIf="((form.get('password')?.hasError('required') || form.get('password')?.invalid) && form.get('password')?.dirty)">
+            <ion-note slot="start" color="warning">
+              A senha deve ter 8 caracteres, conter números, caracteres especiais e letra maiúscula!
+            </ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary" lines="none">
+            <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" [disabled]="form.invalid" class="full-width-button">Salvar</ion-button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

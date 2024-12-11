@@ -1,10 +1,71 @@
-<ion-content color="primary">
+<ion-content role="form" [formGroup]="form" color="primary">
   <div class="center-content">
-    <img src="assets/logo-app.png" alt="MotoEventos">
-    <ion-button color="light" shape="round" fill="outline" (click)="loginWithGoogle()">
-      <ion-icon slot="start" name="logo-google"></ion-icon>
-      Login com Google
-    </ion-button>
-    <ion-label><small>Versão: {{ version }}</small></ion-label>
+
+    <form [formGroup]="form" (submit)="login()">
+      <ion-grid>
+
+        <ion-row>
+          <ion-col>
+            <div class="center-item">
+              <img src="assets/logo-app.png" alt="MotoEventos">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item color="primary">
+              <ion-label position="stacked">E-mail</ion-label>
+              <ion-input ngDefaultControl  formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ion-item color="primary" lines="none" *ngIf="((form.get('email')?.hasError('required') || form.get('email')?.invalid) && form.get('email')?.dirty)">
+              <ion-note slot="start" color="warning">
+                Obrigatório um e-mail válido!
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item color="primary">
+              <ion-label position="stacked">Senha</ion-label>
+              <ion-input ngDefaultControl  formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <ion-item color="primary" lines="none" *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
+              <ion-note slot="start" color="warning">
+                Obrigatório uma senha!
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item color="primary" lines="none">
+              <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" [disabled]="form.invalid" class="full-width-button">Login</ion-button>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <div class="center-item">
+              <span>Não possui usuário cadastrado?<br><strong routerLink="/login-register" routerDirection="back">Cadastre-se!</strong></span>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <div class="center-item">
+              <small>Versão: {{ version }}</small>
+            </div>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </form>
+
   </div>
 </ion-content>

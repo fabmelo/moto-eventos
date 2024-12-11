@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, authState } from '@angular/fire/auth';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
@@ -13,9 +13,9 @@ export const AuthGuard: CanActivateFn = (
   _state: RouterStateSnapshot
 ) => {
   const router = inject(Router);
-  const angularFireAuth = inject(AngularFireAuth);
+  const auth = inject(Auth);
 
-  return angularFireAuth.authState.pipe(
+  return authState(auth).pipe(
     take(1),
     map((user) => {
       if (user) {

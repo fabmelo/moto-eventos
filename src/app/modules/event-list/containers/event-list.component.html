@@ -1,12 +1,57 @@
 <ion-header>
   <ion-toolbar color="primary">
     <app-menu-toggle slot="start"></app-menu-toggle>
-    <ion-title>Moto Eventos<span> | {{title}}</span></ion-title>
+    <ion-title>Moto Eventos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content color="primary">
 
-  <p>Conteudo aqui</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" color="primary">
+          <ion-label>
+            <h1>{{title}}</h1>
+            <p>Estes são os eventos disponíveis pelo Brasil. Clique sobre o evento desejado e veja mais detalhes.</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+
+        <ion-card *ngFor="let evento of eventos" class="claro">
+          <img [src]="evento.imagem">
+          <ion-card-header>
+            <ion-card-title color="secondary"><strong>{{ evento.nome }}</strong></ion-card-title>
+            <ion-card-subtitle>{{ evento.data | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ evento.cidade }} - {{ evento.estado }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-grid>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="auto" *ngIf="uidLogado === evento.uid">
+                <ion-button fill="outline" shape="round" color="secondary" (click)="editarEvento(evento.id)" aria-label="Editar">
+                  <ion-icon name="build" slot="start" aria-hidden="true"></ion-icon>
+                  <strong>Editar</strong>
+                </ion-button>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-button fill="outline" shape="round" color="secondary" (click)="detalheEvento(evento.id)" aria-label="Detalhes">
+                  <ion-icon name="add-circle" slot="start" aria-hidden="true"></ion-icon>
+                  <strong>Detalhes</strong>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="obterMaisEventos($event)" [disabled]="!hasMoreData">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Carregando mais eventos..."></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

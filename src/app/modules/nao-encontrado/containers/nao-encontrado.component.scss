@@ -7,3 +7,29 @@ ion-title {
     font-weight: 400;
   }
 }
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  img {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 20px;
+    filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+  }
+
+  ion-label {
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 20px;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth.service';
 import { ImagemService } from '@app/core/services/imagem.service';
 import { LocationService } from '@app/core/services/location.service';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-register',
@@ -26,6 +26,7 @@ export class EventRegisterComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly locationService = inject(LocationService);
   private readonly toastController = inject(ToastController);
+  private readonly loadingController = inject(LoadingController);
 
   ngOnInit(): void {
     this.dataHoje = new Date();
@@ -51,6 +52,14 @@ export class EventRegisterComponent implements OnInit {
     await toast.present();
   }
 
+  async showLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Aguarde...'
+    });
+    await loading.present();
+    return loading;
+  }
+
   public obterEstados() {
     this.locationService.getEstados().subscribe({
       next: (data: any) => {
@@ -66,8 +75,8 @@ export class EventRegisterComponent implements OnInit {
           return 0;
         });
       },
-      error: (err) => {
-        this.apresentaToast('Erro ao obter estados: ' + err);
+      error: async (err) => {
+        await this.apresentaToast('Erro ao obter estados: ' + err);
       },
     });
   }
@@ -92,8 +101,8 @@ export class EventRegisterComponent implements OnInit {
         this.form.get('cidade')?.setValue('');
         this.localidade = { estado, cidade: '' };
       },
-      error: (err) => {
-        this.apresentaToast('Erro ao obter cidades: ' + err);
+      error: async (err) => {
+        await this.apresentaToast('Erro ao obter cidades: ' + err);
       },
     });
   }
@@ -114,8 +123,9 @@ export class EventRegisterComponent implements OnInit {
     }
   }
 
-  public salvarEvento() {
+  public async salvarEvento() {
     if (this.selectedFile) {
+      const loading = await this.showLoading();      
       const formData = this.form.value;
       // Obtem cidade e estado selecionados
       formData.cidade = this.localidade.cidade;
@@ -130,13 +140,15 @@ export class EventRegisterComponent implements OnInit {
               formData.uid = user.uid;
               // Salvar evento no firebase
               await addDoc(collection(this.firestore, 'eventos'), formData);
-              this.apresentaToast('Evento salvo com sucesso!');
+              await this.apresentaToast('Evento salvo com sucesso!');
               this.form.reset();
+              loading.dismiss();
             }
           });
         },
-        error: (error) => {
-          this.apresentaToast('Erro ao salvar evento: ' + error);
+        error: async (error) => {
+          loading.dismiss();
+          await this.apresentaToast('Erro ao salvar evento: ' + error);
         },
       });
     }

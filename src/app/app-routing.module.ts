@@ -8,9 +8,18 @@ const routes: Routes = [
     loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
   },
   {
+    path: 'login-register',
+    loadChildren: () => import('./modules/login-register/login-register.module').then((m) => m.LoginRegisterModule),
+  },
+  {
     path: 'home',
     canActivateChild: [AuthGuard],
     loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'configuracao',
+    canActivateChild: [AuthGuard],
+    loadChildren: () => import('./modules/configuracao/configuracao.module').then((m) => m.ConfiguracaoModule),
   },
   {
     path: 'event-register',
@@ -23,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/event-list/event-list.module').then((m) => m.EventListModule),
   },
   {
-    path: 'event-detail',
+    path: 'event-detail/:id',
     canActivateChild: [AuthGuard],
     loadChildren: () => import('./modules/event-detail/event-detail.module').then((m) => m.EventDetailModule),
   },

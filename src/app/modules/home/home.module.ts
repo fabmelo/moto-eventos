@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
-import { SharedModule } from '@app/shared/components/shared.module';
+import { SharedModule } from '@app/shared/shared.module';
 import { HomeComponent } from './containers/home.component';
 import { HomeRoutingModule } from './home-routing.module';
 
