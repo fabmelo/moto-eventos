@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Observable, switchMap } from 'rxjs';
@@ -57,6 +57,18 @@ export class AuthService {
   public async logout() {
     await signOut(this.auth);
     this.router.navigate(['/login']);
+  }
+
+  public async getUserEvents() {
+    const user = this.auth.currentUser;
+    if (user) {
+      const q = query(collection(this.firestore, 'eventos'), where('uid', '==', user.uid));
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs.map(doc => doc.data());
+    } else {
+      this.apresentaToast('Usuário não autenticado');
+      return [];
+    }
   }
 
   async apresentaToast(message: string) {

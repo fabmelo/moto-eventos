@@ -28,9 +28,7 @@ export class AppComponent implements OnInit {
         email: u?.email
       };
     });
-  }
 
-  ngOnInit() {
     this.authService.user$.subscribe((user) => {
       if (!user) {
         // Usuário não está logado
@@ -40,6 +38,10 @@ export class AppComponent implements OnInit {
         this.logado = true;
       }
     });
+  }
+
+  ngOnInit() {
+    
   }
 
   public initializeApp() {

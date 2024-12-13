@@ -13,7 +13,7 @@
         <ion-item lines="none" color="primary">
           <ion-label>
             <h1>{{title}}</h1>
-            <p>Cadastre seu evento de motociclismo, preencha com o máximo de informações possíveis, tais como as atrações e sobre ingresso e acesso ao evento, <strong>não deixe nada de fora</strong>! Se possível informe a localização pelo Google Maps, um e-mail e um WhatsApp de contato</p>
+            <p>Os dados abaixo, que estão carregados no formulário, são referentes ao evento selecionado para edição. <strong>Edite os dados que achar necessário!</strong></p>
           </ion-label>
         </ion-item>
       </ion-col>
@@ -70,6 +70,11 @@
               <ion-col>
                 <ion-item color="primary" lines="none">
                   <ion-label position="stacked" class="custom-label">Imagem do Cartaz</ion-label>
+                  <ng-container *ngIf="evento$ | async as evento">
+                    <ion-item *ngIf="evento.imagem" class="claro ion-no-padding" lines="none">
+                      <img [src]="evento.imagem">
+                    </ion-item>
+                  </ng-container>                  
                   <ion-item class="ion-no-padding claro" lines="none" *ngIf="selectedFile">
                     <img *ngIf="previewUrl" [src]="previewUrl" alt="Image Preview" />
                   </ion-item>
@@ -83,24 +88,26 @@
               <ion-col>
                 <ion-item color="primary" class="custom-item">
                   <ion-label position="stacked" class="custom-label">Estado</ion-label>
-                  <ion-select ngDefaultControl formControlName="estado" placeholder="Selecione o estado" (ionChange)="obterCidades($event)">
+                  <ion-select [interfaceOptions]="estadoOptions"  *ngIf="estados.length > 0; else spinnerEstado" ngDefaultControl formControlName="estado" placeholder="Selecione o estado" [compareWith]="compareEstadoCom" (ionChange)="obterCidades($event)">
                     <ion-select-option *ngFor="let estado of estados" [value]="estado">
                       {{ estado.name }}
                     </ion-select-option>
                   </ion-select>
+                  <ng-template #spinnerEstado><ion-spinner color="light"></ion-spinner></ng-template>
                 </ion-item>
               </ion-col>
             </ion-row>
 
-            <ion-row *ngIf="localidade.estado">
+            <ion-row>
               <ion-col>
                 <ion-item color="primary" class="custom-item">
                   <ion-label position="stacked" class="custom-label">Cidade</ion-label>
-                  <ion-select ngDefaultControl formControlName="cidade" placeholder="Selecione a cidade" (ionChange)="defineLocalidade($event)">
+                  <ion-select [interfaceOptions]="cidadeOptions" *ngIf="cidades.length > 0; else spinnerCidade" ngDefaultControl formControlName="cidade" placeholder="Selecione a cidade" [compareWith]="compareCidadeCom" (ionChange)="defineLocalidade($event)">
                     <ion-select-option *ngFor="let cidade of cidades" [value]="cidade">
                       {{ cidade.name }}
                     </ion-select-option>
                   </ion-select>
+                  <ng-template #spinnerCidade><ion-spinner color="light"></ion-spinner></ng-template>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -109,6 +116,9 @@
               <ion-col>
                 <ion-item color="primary" class="custom-item">
                   <ion-label position="stacked" class="custom-label">Localização (Incorporar um mapa)</ion-label>
+                  <ion-item class="claro ion-no-padding" lines="none">
+                    <div [innerHTML]="localizacao"></div>
+                  </ion-item>
                   <ion-input type="text" ngDefaultControl  formControlName="localizacao" placeholder="Google Maps <iframe src=''></iframe>"></ion-input>
                 </ion-item>
               </ion-col>
@@ -124,7 +134,7 @@
                         id="datetime"
                         presentation="date"
                         (ionChange)="form.get('data')?.setValue($event.detail.value)"
-                        [value]="dataHoje"
+                        [value]="dataEvento"
                         [formatOptions]="{
                           date: {
                             weekday: 'short',
@@ -178,7 +188,8 @@
             <ion-row>
               <ion-col>
                 <ion-item color="primary" lines="none">
-                  <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" [disabled]="form.invalid" class="full-width-button">Salvar</ion-button>
+                  <ion-button (click)="cancelar()" color="light" type="button" expand="block" shape="round" size="default" fill="outline" class="full-width-button">Cancelar</ion-button>
+                  <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" class="full-width-button">Salvar</ion-button>
                 </ion-item>
               </ion-col>
             </ion-row>

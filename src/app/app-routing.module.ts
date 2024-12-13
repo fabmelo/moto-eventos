@@ -17,9 +17,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'configuracao',
+    path: 'event-my',
     canActivateChild: [AuthGuard],
-    loadChildren: () => import('./modules/configuracao/configuracao.module').then((m) => m.ConfiguracaoModule),
+    loadChildren: () => import('./modules/event-my/event-my.module').then((m) => m.EventMyModule),
   },
   {
     path: 'event-register',
@@ -35,6 +35,11 @@ const routes: Routes = [
     path: 'event-detail/:id',
     canActivateChild: [AuthGuard],
     loadChildren: () => import('./modules/event-detail/event-detail.module').then((m) => m.EventDetailModule),
+  },
+  {
+    path: 'event-edit/:id',
+    canActivateChild: [AuthGuard],
+    loadChildren: () => import('./modules/event-edit/event-edit.module').then((m) => m.EventEditModule),
   },
   {
     path: 'nao-encontrado',

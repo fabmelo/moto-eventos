@@ -13,7 +13,7 @@
         <ion-item lines="none" color="primary">
           <ion-label>
             <h1>{{title}}</h1>
-            <p>Estes são os eventos disponíveis pelo Brasil. Clique sobre o evento desejado e veja mais detalhes.</p>
+            <p>Estes são os eventos criados e publicados por você. Você pode editar ou remover seus eventos!</p>
           </ion-label>
         </ion-item>
       </ion-col>
@@ -34,7 +34,7 @@
           </ion-card-header>
           <ion-grid>
             <ion-row class="ion-justify-content-center">
-              <ion-col size="auto" *ngIf="uidLogado === evento.uid">
+              <ion-col size="auto">
                 <ion-button fill="outline" shape="round" color="secondary" (click)="editarEvento(evento.id)" aria-label="Editar">
                   <ion-icon name="build" slot="start" aria-hidden="true"></ion-icon>
                   <strong>Editar</strong>
@@ -49,10 +49,6 @@
             </ion-row>
           </ion-grid>
         </ion-card>
-
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="obterMaisEventos($event)" [disabled]="!hasMoreData">
-          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Carregando mais eventos..."></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
 
       </ion-col>
     </ion-row>

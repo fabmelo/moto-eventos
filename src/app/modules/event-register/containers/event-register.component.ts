@@ -12,6 +12,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
   styleUrls: ['./event-register.component.scss'],
 })
 export class EventRegisterComponent implements OnInit {
+
   public title = 'Registrar Evento';
   public form!: FormGroup;
   public selectedFile: File | null = null;
@@ -19,6 +20,7 @@ export class EventRegisterComponent implements OnInit {
   public cidades: any[] = [];
   public localidade: { estado: string; cidade: string } = { estado: '', cidade: '' };
   public dataHoje!: Date | string;
+  public previewUrl: string | ArrayBuffer | null = null;
 
   private readonly imagemService = inject(ImagemService);
   private readonly formBuilder = inject(FormBuilder);
@@ -118,6 +120,19 @@ export class EventRegisterComponent implements OnInit {
 
   public selecionandoImagem(event: any) {
     const file: File = event.target.files[0];
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      const filePreview = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+
+      reader.readAsDataURL(filePreview);
+    }
+
     if (file) {
       this.selectedFile = file;
     }
@@ -130,6 +145,8 @@ export class EventRegisterComponent implements OnInit {
       // Obtem cidade e estado selecionados
       formData.cidade = this.localidade.cidade;
       formData.estado = this.localidade.estado;
+      // Define data de criação do evento
+      formData.criadoEm = new Date().toISOString();
       this.imagemService.uploadImage(this.selectedFile).subscribe({
         next: (response) => {
           // Obtem URL da imagem
@@ -167,6 +184,7 @@ export class EventRegisterComponent implements OnInit {
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
       celular: this.formBuilder.control('', [Validators.required]),
       localizacao: this.formBuilder.control(''),
+      criadoEm: this.formBuilder.control(''),
     });
   }
 }

@@ -2,7 +2,6 @@
   contentId="main-content"
   when="md"
 >
-
   <ion-menu contentId="main-content" menuId="main-menu" [disabled]="false">
 
     <ion-header>
@@ -35,20 +34,20 @@
 
         <ion-menu-toggle autoHide="false">
           <ion-item button lines="none" routerLink="/home" routerDirection="back" class="custom-padding claro">
-            <ion-icon slot="start" name="home" color="secondary"></ion-icon>
-            <ion-label>Início</ion-label>
+            <ion-icon slot="start" name="information-circle" color="secondary"></ion-icon>
+            <ion-label>Notificações e Atualizações</ion-label>
           </ion-item>
           <ion-item button lines="none" routerLink="/event-list" routerDirection="back" class="custom-padding claro">
             <ion-icon slot="start" name="calendar" color="secondary"></ion-icon>
-            <ion-label>Eventos</ion-label>
+            <ion-label>Todos Eventos</ion-label>
           </ion-item>
           <ion-item button lines="none" routerLink="/event-register" routerDirection="back" class="custom-padding claro">
             <ion-icon slot="start" name="add-circle" color="secondary"></ion-icon>
             <ion-label>Registrar Evento</ion-label>
           </ion-item>
-          <ion-item button lines="none" routerLink="/configuracao" routerDirection="back" class="custom-padding claro">
-            <ion-icon slot="start" name="construct" color="secondary"></ion-icon>
-            <ion-label>Configurações</ion-label>
+          <ion-item button lines="none" routerLink="/event-my" routerDirection="back" class="custom-padding claro">
+            <ion-icon slot="start" name="calendar" color="secondary"></ion-icon>
+            <ion-label>Meus Eventos</ion-label>
           </ion-item>
           <ion-item button lines="none" (click)="logout()" class="custom-padding claro">
             <ion-icon slot="start" name="log-out" color="secondary"></ion-icon>

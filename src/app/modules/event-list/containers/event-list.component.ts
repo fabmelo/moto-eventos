@@ -14,7 +14,7 @@ export class EventListComponent  implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  public title = 'Eventos';
+  public title = 'Todos Eventos';
   public eventos: any[] = [];
   public limit = 10;
   public lastVisible: any;
@@ -61,7 +61,7 @@ export class EventListComponent  implements OnInit {
   }
 
   public editarEvento(id: any) {
-
+    this.router.navigate(['/event-edit', id]);
   }
 
 }
