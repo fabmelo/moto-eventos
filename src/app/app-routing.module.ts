@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/login-register/login-register.module').then((m) => m.LoginRegisterModule),
   },
   {
+    path: 'login-reset',
+    loadChildren: () => import('./modules/login-reset/login-reset.module').then((m) => m.LoginResetModule),
+  },
+  {
     path: 'home',
     canActivateChild: [AuthGuard],
     loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),

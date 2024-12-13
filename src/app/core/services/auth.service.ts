@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
@@ -32,6 +32,10 @@ export class AuthService {
 
   public getUserProfile() {
     return this.user$;
+  }
+
+  public resetSenha(email: string) {
+    return sendPasswordResetEmail(this.auth, email);
   }
 
   public async loginWithEmailSenha(email: string, password: string) {

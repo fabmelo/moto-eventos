@@ -1,0 +1,41 @@
+<ion-content role="form" [formGroup]="form" color="primary">
+
+  <form [formGroup]="form" (submit)="reset()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none" color="primary">
+            <ion-label>
+              <h1>{{title}}</h1>
+              <p>Faça a redefinição de sua senha! Digite seu e-mail no campo abaixo e clique em redefinir.</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary">
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input ngDefaultControl  formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <ion-item color="primary" lines="none" *ngIf="((form.get('email')?.hasError('required') || form.get('email')?.invalid) && form.get('email')?.dirty)">
+            <ion-note slot="start" color="warning">
+              Obrigatório um e-mail válido!
+            </ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary" lines="none">
+            <ion-button color="secondary" type="submit" expand="block" shape="round" size="default" [disabled]="form.invalid" class="full-width-button">Redefinir</ion-button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+
+</ion-content>

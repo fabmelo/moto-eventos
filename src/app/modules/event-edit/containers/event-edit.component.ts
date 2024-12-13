@@ -3,7 +3,6 @@ import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '@app/core/services/auth.service';
 import { ImagemService } from '@app/core/services/imagem.service';
 import { LocationService } from '@app/core/services/location.service';
 import { LoadingController, ToastController } from '@ionic/angular';
@@ -34,7 +33,6 @@ export class EventEditComponent  implements OnInit {
   private readonly imagemService = inject(ImagemService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly firestore = inject(Firestore);
-  private readonly authService = inject(AuthService);
   private readonly locationService = inject(LocationService);
   private readonly toastController = inject(ToastController);
   private readonly loadingController = inject(LoadingController);
