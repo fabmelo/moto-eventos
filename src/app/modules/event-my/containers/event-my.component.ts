@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { DadosService } from '@app/core/services/dados.service';
 
 @Component({
@@ -13,7 +12,6 @@ export class EventMyComponent implements OnInit {
   public eventos: any[] = [];
 
   private readonly dadosService = inject(DadosService);
-  private readonly router = inject(Router);
 
   ngOnInit() {
     this.obterEventos();
@@ -23,6 +21,7 @@ export class EventMyComponent implements OnInit {
     this.dadosService.getUserEvents().then(
       (user) => {
         this.eventos = user;
+        console.log(this.eventos);
       }
     );
   }

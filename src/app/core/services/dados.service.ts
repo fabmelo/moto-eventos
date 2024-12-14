@@ -15,7 +15,7 @@ export class DadosService {
 
   public async obterEventos() {
     const querySnapshot = await getDocs(collection(this.firestore, 'eventos'));
-    return querySnapshot.docs.map(doc => doc.data());
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
   public obterEventosComInfiniteScroll(limitCount: number, startAfterDoc?: any): Observable<any[]> {
@@ -34,7 +34,7 @@ export class DadosService {
     if (user) {
       const q = query(collection(this.firestore, 'eventos'), where('uid', '==', user.uid));
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => doc.data());
+      return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } else {
       await this.toastService.apresentaToast('Usuário não autenticado');
       return [];
@@ -48,7 +48,7 @@ export class DadosService {
       limit(2)
     );
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => doc.data());
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
 }

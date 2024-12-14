@@ -22,7 +22,7 @@
       <ion-col>
 
         <ion-card *ngIf="evento$ | async as evento" class="claro">
-          <img [src]="evento.imagem">
+          <img [src]="evento.imagem" class="imagem">
           <ion-card-header>
             <ion-card-title color="secondary"><strong>{{ evento.nome }}</strong></ion-card-title>
             <ion-card-subtitle>{{ evento.data | date: 'dd/MM/yyyy' }}</ion-card-subtitle>

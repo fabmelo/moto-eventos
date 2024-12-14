@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth.service';
 import { DadosService } from '@app/core/services/dados.service';
 
@@ -12,7 +11,6 @@ export class EventListComponent  implements OnInit {
 
   private readonly dadosService = inject(DadosService);
   private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
 
   public title = 'Todos Eventos';
   public eventos: any[] = [];
