@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { Observable, switchMap } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly auth = inject(Auth);
   private readonly firestore = inject(Firestore);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
 
   public user$: Observable<any>;
 
@@ -43,7 +43,7 @@ export class AuthService {
       await signInWithEmailAndPassword(this.auth, email, password);
       this.router.navigate(['/home']);
     } catch (error) {
-      this.apresentaToast('Erro ao realizar o login' + error);
+      await this.toastService.apresentaToast('Erro ao realizar o login' + error);
     }
   }
 
@@ -54,7 +54,7 @@ export class AuthService {
       await setDoc(doc(this.firestore, `usuarios/${user.uid}`), { nome, email });
       this.router.navigate(['/home']);
     } catch (error) {
-      this.apresentaToast('Erro ao realizar registro de usuário' + error);
+      await this.toastService.apresentaToast('Erro ao realizar registro de usuário' + error);
     }
   }
 
@@ -63,33 +63,5 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  public async getUserEvents() {
-    const user = this.auth.currentUser;
-    if (user) {
-      const q = query(collection(this.firestore, 'eventos'), where('uid', '==', user.uid));
-      const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => doc.data());
-    } else {
-      this.apresentaToast('Usuário não autenticado');
-      return [];
-    }
-  }
-
-  async apresentaToast(message: string) {
-    const toast = await this.toastController.create({
-      color:'warning',
-      message: message,
-      duration: 5000,
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'Fechar',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await toast.present();
-  }
 }
 

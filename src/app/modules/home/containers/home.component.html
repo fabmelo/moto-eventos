@@ -13,7 +13,7 @@
         <ion-item lines="none" color="primary">
           <ion-label>
             <h1>{{title}}</h1>
-            <p>Confira as notificações e atualizações referentes ao eventso.</p>
+            <p>Estes são os últimos eventos cadastrados no aplicativo! Contribua também, cadastre seus eventos e faça nossa comunidade forte.</p>
           </ion-label>
         </ion-item>
       </ion-col>
@@ -21,28 +21,27 @@
     <ion-row>
       <ion-col>
 
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+        <ion-text *ngIf="eventos.length === 0" class="ion-text-center" color="light">
+          <h3>Não existem eventos!</h3>
+        </ion-text>
+
+        <ion-card *ngFor="let evento of eventos" class="claro">
+          <img [src]="evento.imagem">
           <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            <ion-card-title color="secondary"><strong>{{ evento.nome }}</strong></ion-card-title>
+            <ion-card-subtitle>{{ evento.data | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ evento.cidade }} - {{ evento.estado }}</ion-card-subtitle>
           </ion-card-header>
-        
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-          </ion-card-content>
-        </ion-card>
-        
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-          </ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="auto">
+                <ion-button fill="outline" shape="round" color="secondary" [routerLink]="['/event-detail', evento.id]" aria-label="Detalhes">
+                  <ion-icon name="add-circle" slot="start" aria-hidden="true"></ion-icon>
+                  <strong>Detalhes</strong>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card>
 
       </ion-col>

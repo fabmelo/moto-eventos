@@ -2,12 +2,12 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.motoeventos.app',
-  appName: 'moto-eventos',
+  appName: 'Moto Eventos',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
     SplashScreen: {
-      "launchShowDuration": 3000,
+      "launchShowDuration": 6000,
       "launchAutoHide": true,
       "backgroundColor": "#c60407",
       "androidSplashResourceName": "splash",

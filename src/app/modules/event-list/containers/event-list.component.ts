@@ -19,7 +19,7 @@ export class EventListComponent  implements OnInit {
   public limit = 10;
   public lastVisible: any;
   public uidLogado: string | undefined = '';
-  public hasMoreData = true; 
+  public hasMoreData = true;
 
   ngOnInit() {
     this.obterEventos();
@@ -37,7 +37,7 @@ export class EventListComponent  implements OnInit {
       }
       return;
     }
-  
+
     this.dadosService.obterEventosComInfiniteScroll(this.limit, this.lastVisible).subscribe(data => {
       if (data.length > 0) {
         this.eventos = this.eventos.concat(data);
@@ -45,7 +45,7 @@ export class EventListComponent  implements OnInit {
       } else {
         this.hasMoreData = false; // Não há mais dados para carregar
       }
-  
+
       if (event) {
         event.target.complete();
       }
@@ -54,14 +54,6 @@ export class EventListComponent  implements OnInit {
 
   public obterMaisEventos(event: any) {
     this.obterEventos(event);
-  }
-
-  public detalheEvento(id: any) {
-    this.router.navigate(['/event-detail', id]);
-  }
-
-  public editarEvento(id: any) {
-    this.router.navigate(['/event-edit', id]);
   }
 
 }

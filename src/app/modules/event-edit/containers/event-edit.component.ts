@@ -5,7 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImagemService } from '@app/core/services/imagem.service';
 import { LocationService } from '@app/core/services/location.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastService } from '@app/core/services/toast.service';
+import { LoadingController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
@@ -34,7 +35,7 @@ export class EventEditComponent  implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly firestore = inject(Firestore);
   private readonly locationService = inject(LocationService);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly loadingController = inject(LoadingController);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly domSanitizer = inject(DomSanitizer);
@@ -63,23 +64,6 @@ export class EventEditComponent  implements OnInit {
     });
   }
 
-  async apresentaToast(message: string) {
-    const toast = await this.toastController.create({
-      color:'warning',
-      message: message,
-      duration: 5000,
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'Fechar',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await toast.present();
-  }
-
   async showLoading() {
     const loading = await this.loadingController.create({
       message: 'Aguarde...'
@@ -104,7 +88,7 @@ export class EventEditComponent  implements OnInit {
         });
       },
       error: async (err) => {
-        await this.apresentaToast('Erro ao obter estados: ' + err);
+        await this.toastService.apresentaToast('Erro ao obter estados: ' + err);
       },
     });
   }  
@@ -155,7 +139,7 @@ export class EventEditComponent  implements OnInit {
 
       },
       error: async (err) => {
-        await this.apresentaToast('Erro ao obter cidades: ' + err);
+        await this.toastService.apresentaToast('Erro ao obter cidades: ' + err);
       },
     });
   }
@@ -209,7 +193,7 @@ export class EventEditComponent  implements OnInit {
           formData.imagem = response.secure_url;
         },
         error: async (err) => {
-          await this.apresentaToast('Erro ao fazer upload da imagem: ' + err);
+          await this.toastService.apresentaToast('Erro ao fazer upload da imagem: ' + err);
         },
       });
     } else {
@@ -225,9 +209,9 @@ export class EventEditComponent  implements OnInit {
         const documentRef = doc(this.firestore, 'eventos', this.id);
         await updateDoc(documentRef, this.form.value);
       } else {
-        await this.apresentaToast('Erro: ID do evento não encontrado.');
+        await this.toastService.apresentaToast('Erro: ID do evento não encontrado.');
       }
-      await this.apresentaToast('Evento salvo com sucesso!');
+      await this.toastService.apresentaToast('Evento salvo com sucesso!');
       this.form.reset();
       loading.dismiss();
       this.router.navigate(['/event-list']);

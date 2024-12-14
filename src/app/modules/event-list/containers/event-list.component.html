@@ -35,13 +35,13 @@
           <ion-grid>
             <ion-row class="ion-justify-content-center">
               <ion-col size="auto" *ngIf="uidLogado === evento.uid">
-                <ion-button fill="outline" shape="round" color="secondary" (click)="editarEvento(evento.id)" aria-label="Editar">
+                <ion-button fill="outline" shape="round" color="secondary" [routerLink]="['/event-edit', evento.id]" aria-label="Editar">
                   <ion-icon name="build" slot="start" aria-hidden="true"></ion-icon>
                   <strong>Editar</strong>
                 </ion-button>
               </ion-col>
               <ion-col size="auto">
-                <ion-button fill="outline" shape="round" color="secondary" (click)="detalheEvento(evento.id)" aria-label="Detalhes">
+                <ion-button fill="outline" shape="round" color="secondary" [routerLink]="['/event-detail', evento.id]" aria-label="Detalhes">
                   <ion-icon name="add-circle" slot="start" aria-hidden="true"></ion-icon>
                   <strong>Detalhes</strong>
                 </ion-button>

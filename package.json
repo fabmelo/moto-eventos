@@ -5,9 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build:watch": "ng build --watch --configuration development",
+    "build:prod": "ng build --configuration=production --project=moto-eventos",
     "test": "ng test",
     "ionic:serve": "ng.cmd run moto-eventos:serve --host=localhost --port=8100",
+    "capacitor:apk": "npx cap open android",
+    "capacitor:sync": "npx cap sync",
     "capacitor:assets": "npx @capacitor/assets generate --iconBackgroundColor '#c60407' --iconBackgroundColorDark '#c60407' --splashBackgroundColor '#c60407' --splashBackgroundColorDark '#c60407' --assetPath '/www/assets'"
   },
   "private": true,

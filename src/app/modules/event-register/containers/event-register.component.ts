@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth.service';
 import { ImagemService } from '@app/core/services/imagem.service';
 import { LocationService } from '@app/core/services/location.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastService } from '@app/core/services/toast.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-register',
@@ -27,7 +28,7 @@ export class EventRegisterComponent implements OnInit {
   private readonly firestore = inject(Firestore);
   private readonly authService = inject(AuthService);
   private readonly locationService = inject(LocationService);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly loadingController = inject(LoadingController);
 
   ngOnInit(): void {
@@ -35,23 +36,6 @@ export class EventRegisterComponent implements OnInit {
     this.dataHoje = this.dataHoje.toISOString().slice(0, 19);
     this.criarFormulario();
     this.obterEstados();
-  }
-
-  async apresentaToast(message: string) {
-    const toast = await this.toastController.create({
-      color:'warning',
-      message: message,
-      duration: 5000,
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'Fechar',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await toast.present();
   }
 
   async showLoading() {
@@ -78,7 +62,7 @@ export class EventRegisterComponent implements OnInit {
         });
       },
       error: async (err) => {
-        await this.apresentaToast('Erro ao obter estados: ' + err);
+        await this.toastService.apresentaToast('Erro ao obter estados: ' + err);
       },
     });
   }
@@ -104,7 +88,7 @@ export class EventRegisterComponent implements OnInit {
         this.localidade = { estado, cidade: '' };
       },
       error: async (err) => {
-        await this.apresentaToast('Erro ao obter cidades: ' + err);
+        await this.toastService.apresentaToast('Erro ao obter cidades: ' + err);
       },
     });
   }
@@ -157,7 +141,7 @@ export class EventRegisterComponent implements OnInit {
               formData.uid = user.uid;
               // Salvar evento no firebase
               await addDoc(collection(this.firestore, 'eventos'), formData);
-              await this.apresentaToast('Evento salvo com sucesso!');
+              await this.toastService.apresentaToast('Evento salvo com sucesso!');
               this.form.reset();
               loading.dismiss();
             }
@@ -165,7 +149,7 @@ export class EventRegisterComponent implements OnInit {
         },
         error: async (error) => {
           loading.dismiss();
-          await this.apresentaToast('Erro ao salvar evento: ' + error);
+          await this.toastService.apresentaToast('Erro ao salvar evento: ' + error);
         },
       });
     }
